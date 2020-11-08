@@ -1,0 +1,146 @@
+@media only screen and (max-width: 600px) {
+    .division {
+        width: 100% !important;
+        margin-left: 2% !important;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .division {
+        float: left;
+        width: 29%;
+    }
+    .manazeri {
+        margin-bottom: auto !important;
+    }
+    .scenaristi {
+        margin-bottom: auto;
+    }
+    .herci {
+        margin-bottom: auto;
+    }
+    .kulisari {
+        margin-top: auto !important;
+    }
+    .kostymeri {
+        margin-top: auto !important;
+    }
+    .hudobnici {
+        margin-top: auto !important;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .division {
+        float: left;
+        width: 27%;
+    }
+    .manazeri {
+        margin-bottom: 150px;
+    }
+}
+@media only screen and (max-width: 1800px) {
+    .team .division {
+        margin-left: 3% !important;
+        padding-left: 2% !important;
+    }
+}
+@media only screen and (max-width: 1700px) {
+    .team .division {
+        margin-left: 2.5% !important;
+        padding-left: 1.8% !important;
+    }
+}
+@media only screen and (max-width: 1600px) {
+    .team .division {
+        margin-left: 2% !important;
+        padding-left: 1.5% !important;
+    }
+}
+@media only screen and (max-width: 1500px) {
+    .team .division {
+        margin-left: 1.5% !important;
+        padding-left: 1% !important;
+    }
+}
+
+
+
+.team .header h1 {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-family: 'Kanit', sans-serif;
+    font-size: 60px;
+    text-transform: uppercase;
+}
+.team h2 {
+    font-family: 'Kanit', sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+.team .herci li {
+    list-style-type: none;
+}
+.team .division {
+    margin-left: 3.5%;
+    padding-left: 2%;
+    border-left: 4px solid;
+    float: left;
+}
+.division p {
+    font-size: 18px;
+}
+.team .herci {
+    border-color: black;
+}
+.team .scenaristi {
+    border-color: rgb(243, 243, 26);
+}
+.team .manazeri {
+    border-color: blue;
+}
+.team .kulisari {
+    border-color: red;
+}
+.team .kostymeri {
+    border-color: rgb(10, 185, 10);
+}
+.team .hudobnici {
+    border-color: rgb(2, 177, 177);
+    margin-bottom: 100px;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+.tooltip .tooltiptxt {
+    visibility: hidden;
+    width: 200px;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-style: normal;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -100px;
+}
+.tooltip .tooltiptxt::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: gray transparent transparent transparent;
+}
+.tooltip:hover .tooltiptxt {
+    visibility: visible;
+}
