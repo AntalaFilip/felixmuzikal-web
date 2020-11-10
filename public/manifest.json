@@ -2,6 +2,7 @@
   "short_name": "FelixMuzikál WEB",
   "name": "The official website of the FelixMuzikál project",
   "start_url": ".",
+  "homepage": "https://felixmuzikal.sk/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
