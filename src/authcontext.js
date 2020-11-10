@@ -1,64 +1,45 @@
-import React, { createContext,Component } from "react";
+import React, { createContext, Component } from "react";
 import axios from 'axios'
+import { withCookies, Cookies } from 'react-cookie';
+import { instanceOf } from 'prop-types';
 export const AuthContext = createContext();
 
 // Define the base URL
 const Axios = axios.create({
-    baseURL: 'https://backend.muzikalvrazdapodlaobete.sk/',
+    baseURL: 'https://backend.felixmuzikal.sk/',
 });
 
-class AuthContextProvider extends Component{
-    constructor(){
-        super();
-        this.isLoggedIn();
-    }
+class AuthContextProvider extends Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
 
-    // Root State
+    constructor(props) {
+        super(props);
+        this.auth();
+    }
     state = {
-        showLogin:true,
-        isAuth:false,
-        theUser:null,
+        isAuth: false,
+        data: null,
     }
-    
-    // Toggle between Login & Signup page
-    toggleNav = () => {
-        const showLogin = !this.state.showLogin;
+    logout = () => {
+        const { cookies } = this.props;
+        cookies.remove(`sessionToken`);
         this.setState({
             ...this.state,
-            showLogin
+            isAuth: false
         })
     }
+    login = async (user) => {
+        const { cookies } = this.props;
 
-    // On Click the Log out button
-    logoutUser = () => {
-        localStorage.removeItem('loginToken');
-        this.setState({
-            ...this.state,
-            isAuth:false
-        })
-    }
-
-    registerUser = async (user) => {
-
-        // Sending the user registration request
-        const register = await Axios.post('register',{
-            name:user.name,
-            email:user.email,
-            password:user.password 
-        });
-
-        return register.data;
-    }
-
-
-    loginUser = async (user) => {
-
-        // Sending the user Login request
-        Axios.post('login', user)
-        .then(result => {
+        Axios.post('login', {
+            user: user.user,
+            pass: user.pass,
+        }).then(result => {
             if (result.status === 200) {
-                localStorage.setItem('loginToken', result.data.token);
-                this.isLoggedIn();
+                cookies.set(`sessionToken`, result.data.token)
+                this.auth();
                 return result.data;
             }
             else {
@@ -66,43 +47,34 @@ class AuthContextProvider extends Component{
             }
         })
     }
+    auth = async () => {
+        const { cookies } = this.props;
+        const token = cookies.get('sessionToken');
 
-    // Checking user logged in or not
-    isLoggedIn = async () => {
-        const loginToken = localStorage.getItem('loginToken');
-
-        // If inside the local-storage has the JWT token
-        if(loginToken){
-
-            //Adding JWT token to axios default header
-            Axios.defaults.headers.common['Authorization'] = loginToken;
-
-            // Fetching the user information
+        if (token) {
+            Axios.defaults.headers.common['Authorization'] = token;
             Axios.post('auth')
-            .then(result => {
-                if(result.status === 200){
-                    this.setState({
-                        ...this.state,
-                        isAuth:true,
-                        theUser:result.data.user
-                    });
-                    console.log(`Logged in as ${this.state.theUser}`);
-                }
-                console.log(`Auth failed`);
-            })
+                .then(result => {
+                    if (result.status === 200) {
+                        this.setState({
+                            ...this.state,
+                            isAuth: true,
+                            data: result.data
+                        });
+                    }
+                })
         }
+        return false;
     }
 
-    render(){
+    render() {
         const contextValue = {
-            rootState:this.state,
-            toggleNav:this.toggleNav,
-            isLoggedIn:this.isLoggedIn,
-            registerUser:this.registerUser,
-            loginUser:this.loginUser,
-            logoutUser:this.logoutUser
+            state: this.state,
+            auth: this.auth,
+            login: this.login,
+            logout: this.logout
         }
-        return(
+        return (
             <AuthContext.Provider value={contextValue}>
                 {this.props.children}
             </AuthContext.Provider>
@@ -111,4 +83,4 @@ class AuthContextProvider extends Component{
 
 }
 
-export default AuthContextProvider;
+export default withCookies(AuthContextProvider);
