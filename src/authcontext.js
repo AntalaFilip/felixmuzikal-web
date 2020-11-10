@@ -38,7 +38,7 @@ class AuthContextProvider extends Component {
             pass: user.pass,
         }).then(result => {
             if (result.status === 200) {
-                cookies.set(`sessionToken`, result.data.token)
+                cookies.set(`sessionToken`, result.data.token, { domain: '.felixmuzikal.sk', maxAge: 3600 })
                 this.auth();
                 return result.data;
             }
