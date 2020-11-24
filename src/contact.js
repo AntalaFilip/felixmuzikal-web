@@ -9,11 +9,13 @@ export default function Contact() {
             </div>
             <div className="text emails">
                 <p>Ak máte nejakú otázku, môžete nám napísať na tieto maily:</p>
-                <e>Lístky: </e><a href="mailto:rezervacie@muzikalvrazdapodlaobete.sk">rezervacie@muzikalvrazdapodlaobete.sk</a>
+                <e>Lístky: </e><a href="mailto:rezervacie@felixmuzikal.sk">rezervacie@felixmuzikal.sk</a>
                 <br />
-                <e>Sponzorstvo: </e><a href="mailto:sponzorstvo@muzikalvrazdapodlaobete.sk">sponzorstvo@muzikalvrazdapodlaobete.sk</a>
-                <br />
-                <e>Hocičo iné <span role="img" aria-label="emoji">😀</span>: </e><a href="mailto:filip@muzikalvrazdapodlaobete.sk">filip@muzikalvrazdapodlaobete.sk</a>
+                <e>Manažéri projektu: </e><a href="mailto:manazeri@felixmuzikal.sk">manazeri@felixmuzikal.sk</a>
+                <br /><br />
+                <e>Zapojené triedy:</e>
+                <li>Zástupca: trieda@trieda.felixmuzikal.sk</li>
+                <li>Manažéri: manazeri@trieda.felixmuzikal.sk</li>
             </div>
             <div className="text felix">
                 <a href="http://felix.edupage.org"><h2>Škola Felix</h2></a>
