@@ -33,7 +33,7 @@ class AuthContextProvider extends Component {
     login = async (user) => {
         const { cookies } = this.props;
 
-        Axios.post('login', {
+        Axios.post('auth/login', {
             user: user.user,
             pass: user.pass,
         }).then(result => {
