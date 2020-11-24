@@ -13,7 +13,7 @@ export default class Classes extends React.Component {
                     <div className="show">
                         <div className="class first">
                             <h2>Pandy</h2>
-                            <h3>s muzikálom "Názov"</h3>
+                            <h3>s muzikálom "Obyčajne neobyčajný výlet"</h3>
                             {/* eslint-disable-next-line */}
                             <h3>Viac info nájdete <a>na ich stránke</a></h3>
                         </div>

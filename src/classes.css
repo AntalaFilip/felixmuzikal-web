@@ -13,7 +13,7 @@
 }
 .classes h3 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
 }
 .classes h4 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -38,7 +38,8 @@
 }
 .classes .list .show {
     text-align: center;
-    margin-left: 3%;
+    margin-top: 1%;
+    margin-left: 3.5%;
     float: left;
     border: 2px solid lime;
     width: 45%;
