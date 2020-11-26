@@ -6,21 +6,20 @@ export const AuthContext = createContext();
 
 // Define the base URL
 const Axios = axios.create({
-    baseURL: 'https://backend.felixmuzikal.sk/',
+    baseURL: 'https://api.felixmuzikal.sk/',
 });
 
 class AuthContextProvider extends Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
-
     constructor(props) {
         super(props);
         this.auth();
-    }
-    state = {
-        isAuth: false,
-        data: null,
+        this.state = {
+            isAuth: false,
+            data: null,
+        }
     }
     logout = () => {
         const { cookies } = this.props;
@@ -29,28 +28,11 @@ class AuthContextProvider extends Component {
             ...this.state,
             isAuth: false
         })
-    }
-    login = async (user) => {
-        const { cookies } = this.props;
-
-        Axios.post('auth/login', {
-            user: user.user,
-            pass: user.pass,
-        }).then(result => {
-            if (result.status === 200) {
-                cookies.set(`sessionToken`, result.data.token, { domain: '.felixmuzikal.sk', maxAge: 3600 })
-                this.auth();
-                return result.data;
-            }
-            else {
-                console.log(`Login failed: ${user}`)
-            }
-        })
+        window.location.href = '/'
     }
     auth = async () => {
         const { cookies } = this.props;
         const token = cookies.get('sessionToken');
-
         if (token) {
             Axios.defaults.headers.common['Authorization'] = token;
             Axios.post('auth')
@@ -62,16 +44,16 @@ class AuthContextProvider extends Component {
                             data: result.data
                         });
                     }
+                    else this.logout();
                 })
         }
-        return false;
+        return this.state.isAuth;
     }
 
     render() {
         const contextValue = {
             state: this.state,
             auth: this.auth,
-            login: this.login,
             logout: this.logout
         }
         return (
