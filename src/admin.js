@@ -3,7 +3,7 @@ import './admin.css'
 import { AuthContext } from './authcontext'
 require('dotenv').config({ path: '/var/www/backend/.env' })
 
-function Admin() {
+export default function Admin() {
     const { state, logout } = useContext(AuthContext);
     const { isAuth, data } = state;
     if (isAuth) {
@@ -17,7 +17,7 @@ function Admin() {
     else return (<Login />)
 }
 
-function Login() {
+export function Login() {
 
     const { login } = useContext(AuthContext);
 
@@ -74,6 +74,3 @@ function Login() {
         </div>
     )
 }
-
-export default Admin;
-export { Login, };

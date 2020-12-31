@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
   Link,
+  useLocation,
 } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import Home from './home';
@@ -12,6 +13,7 @@ import About from './about';
 import Classes from './classes';
 import Contact from './contact'
 import Admin from './admin';
+import Login from './login';
 import AuthContextProvider, { AuthContext } from './authcontext';
 import './index.css';
 
@@ -25,6 +27,10 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 export default function App() {
   const { state } = useContext(AuthContext);
@@ -53,6 +59,9 @@ export default function App() {
         </Route>
         <Route path="/contact">
           <Contact />
+        </Route>
+        <Route path="/login">
+          <Login ref={useQuery().get("ref")} />
         </Route>
       </Switch>
     </Router>

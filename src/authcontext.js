@@ -1,53 +1,56 @@
 import React, { createContext, Component } from "react";
 import axios from 'axios'
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
 export const AuthContext = createContext();
 
 // Define the base URL
 const Axios = axios.create({
-    baseURL: 'https://api.felixmuzikal.sk/',
+    baseURL: 'https://api.felixmuzikal.sk/auth',
 });
 
 class AuthContextProvider extends Component {
-    static propTypes = {
-        cookies: instanceOf(Cookies).isRequired
-    };
     constructor(props) {
         super(props);
         this.auth();
         this.state = {
             isAuth: false,
             data: null,
+            err: null,
         }
     }
     logout = () => {
-        const { cookies } = this.props;
-        cookies.remove(`sessionToken`);
-        this.setState({
-            ...this.state,
-            isAuth: false
-        })
-        window.location.href = '/'
+        Axios.post('/logout')
+            .then(result => {
+                if (result.status === 200) {
+                    this.setState({
+                        ...this.state,
+                        isAuth: false
+                    });
+                    window.location.href = '/';
+                }
+                else {
+                    this.setState({ ...this.state, err: result.data.error });
+                }
+            })
+            .catch(err => this.setState({ ...this.state, err: err }));
     }
     auth = async () => {
-        const { cookies } = this.props;
-        const token = cookies.get('sessionToken');
-        if (token) {
-            Axios.defaults.headers.common['Authorization'] = token;
-            Axios.post('auth')
-                .then(result => {
-                    if (result.status === 200) {
-                        this.setState({
-                            ...this.state,
-                            isAuth: true,
-                            data: result.data
-                        });
-                    }
-                    else this.logout();
-                })
-        }
-        return this.state.isAuth;
+        Axios.post('/')
+            .then(result => {
+                if (result.status === 200) {
+                    this.setState({
+                        ...this.state,
+                        isAuth: true,
+                        data: result.data
+                    });
+                }
+                else {
+                    this.setState({
+                        ...this.state,
+                        isAuth: false,
+                        data: null,
+                    });
+                }
+            }).catch(err => this.setState({ ...this.state, err: err }));
     }
 
     render() {
@@ -65,4 +68,4 @@ class AuthContextProvider extends Component {
 
 }
 
-export default withCookies(AuthContextProvider);
+export default AuthContextProvider;
